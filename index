@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
+        <script src="relayr.js"></script>
+        <script src="huejs.js"></script>
+
+        <title>WeedBox</title>
+        <meta content="">
+        <style>
+            html {
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+            body {
+                background-image: url(Slides/Slide_1/Background.png);
+                background-repeat: no-repeat;
+                background-position: center middle;
+            }
+            div#background {
+                background-image: url(Slides/Slide_2/Background_transparency.svg);
+            }
+            div.left {
+                float: left;
+                width: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>WeedBox</h1>
+        <img src="Slides/Slide_1/Logo.svg" alt="logo">
+
+        <div id="background">
+            <div class="left">
+                <img src="Slides/Slide_2/Green_onion_icon.svg" alt="logo">
+                <div style="clear: both;"></div>
+                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
+            </div>
+            <div class="left">
+                <img src="Slides/Slide_2/Marijuana_icon.svg" alt="logo">
+                <div style="clear: both;"></div>
+                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
+            </div>
+            <div class="left">
+                <img src="Slides/Slide_2/Peppers_icon.svg" alt="logo">
+                <div style="clear: both;"></div>
+                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
+            </div>
+            <div class="left">
+                <img src="Slides/Slide_2/Chilli_icon.svg" alt="logo">
+                <div style="clear: both;"></div>
+                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <p>Light: <span id="light"></span></p>
+        <p>Humidity: <span id="humidity"></span></p>
+        <p>Temperature: <span id="temperature"></span></p>
+        <input type="text" id="commands" value="[2, 4]" placeholder="Arduino commands"></input>
+        <input type="button" value="send arduino" onclick="javascript:sendArduino();"></input>
+        <br>
+        <input type="text" id="hue" value="10" placeholder="hue"></input>
+        <input type="text" id="sat" value="10" placeholder="sat"></input>
+        <input type="text" id="brightness" value="10" placeholder="brightness"></input>
+        <input type="button" value="send Hue" onclick="javascript:sendToHue();"></input>
+        <script>
+            var hjs = HueJS({
+            ipAddress:"192.168.178.103",
+                devicetype:"test",
+                username: "newdeveloper"
+            });
+            hjs.authenticate(
+                function(success) {
+                    console.log(success);
+                },
+                function(error) {
+                    alert("Error connecting to Hue");
+                    console.log(error);
+                }
+            );
+            var dummyIndex = 0;
+            var dummyData = [[27.5, 28, 13], [28.1, 27, 12], [28.0, 27, 13], [27.8, 28, 13], [27.9, 28, 14]];
+            var relayr = RELAYR.init({
+                appId: ""
+            });
+            // If you have a token and your device ID, you can start listening to your device without going through the login process
+            document.getElementById("light").innerHTML = dummyData[dummyIndex][2];
+            document.getElementById("humidity").innerHTML = dummyData[dummyIndex][1];
+            document.getElementById("temperature").innerHTML = dummyData[dummyIndex][0];
+            setInterval
+            relayr.devices().getDeviceData({
+                token: "",
+                deviceId: "", incomingData: function(data) {
+                    document.getElementById("humidity").innerHTML = data.readings[1].value;
+                    document.getElementById("temperature").innerHTML = data.readings[0].value;
+                }
+            });
+            relayr.devices().getDeviceData({
+                token: "",
+                deviceId: "", incomingData: function(data) {
+                    document.getElementById("light").innerHTML = data.readings[1].value;
+                }
+            });
+            function sendToHue() {
+                var sat = document.getElementById("sat").value;
+                var hue = document.getElementById("hue").value;
+                var brightness = document.getElementById("brightness").value;
+                console.log("hue: " + hue + " sat: " + sat + " brightness: " + brightness);
+                var res = hjs.setValue(10, { sat: parseInt(sat), hue: parseInt(hue), bri: parseInt(brightness), on: false });
+                speak('Thank you!');
+            }
+            function sendArduino() {
+                var commands = document.getElementById("commands").value;
+                relayr.devices().sendCommand({
+                    token: "",
+                    deviceId: "",
+                    command: {"path":"", "command":"down_ch_payload", "value": [0,1]}
+                });
+                speak('Fancy!');
+            }
+            function speak(text){
+                var msg = new SpeechSynthesisUtterance();
+                var voices = speechSynthesis.getVoices();
+                msg.voice = voices[4]; // Note: some voices don't support altering params
+                msg.voiceURI = 'Google UK English Female';
+                msg.volume = 1; // 0 to 1
+                msg.rate = 0.1; // 0.1 to 10
+                msg.pitch = 0; //0 to 2
+                msg.text = text;
+                msg.lang = 'en-GB';
+                speechSynthesis.speak(msg);
+            }
+            /*var hue = 0;
+                setInterval(function() {
+                    var res = hjs.setValue(10, { sat: 255, hue: hue, bri: 255, on: true });
+                    hue += 250;
+                }, 250);*/
+            speak('welcome to greenbox!');
+        </script>
+    </body>
+</html>
