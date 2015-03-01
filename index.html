@@ -3,6 +3,7 @@
     <head>
       <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
+        <script type="text/javascript" src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
         <script src="relayr.js"></script>
@@ -134,7 +135,7 @@
             body {
                 background-image: url(Slides/Slide_1/Background.png);
                 background-repeat: no-repeat;
-                
+                background-size: 100% auto;
 	        margin: 0;
 	    }
 
@@ -372,6 +373,86 @@
           <div style="clear: both;"></div>
 	</div>
 
+    <div id="view3">
+        <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/Main_plant_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> main </p>
+            </div>
+          </div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/big_plant_timeline_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> big main </p>
+            </div>
+          </div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/Small_plant_timeline_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> start main </p>
+            </div>
+          </div>
+
+          <div style="clear:both;"></div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/Health_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> overall </p>
+            </div>
+          </div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/Humidity_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> humidity </p>
+            </div>
+          </div>
+
+          <div style="clear:both;"></div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/Temperature_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> temperature </p>
+            </div>
+          </div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/Light_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> light </p>
+            </div>
+          </div>
+
+          <div style="clear:both;"></div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/timeline_icon.svg" alt="logo" width="1400px">
+              <div style="clear: both;"></div>
+              <p> timeline </p>
+            </div>
+          </div>
+
+          <div class="left">
+            <div class="inner2">
+              <img src="Slides/Slide_4/timeline_marker_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+              <p> timeline marker </p>
+            </div>
+          </div>
+    </div>
+
 	<div id="debug">
           <p>Light: <span id="light"></span></p>
           <p>Humidity: <span id="humidity"></span></p>
@@ -385,6 +466,7 @@
           <input type="button" value="send Hue" onclick="javascript:sendToHue();"></input>
 	</div>
           <script>
+            //$.get("https://1aim.com/smsgateway/", { sender: "GreenBox", number: "017697888820", message: "jo wazzap" });
             var hjs = HueJS({
             ipAddress:"192.168.178.103",
                 devicetype:"test",
@@ -402,13 +484,13 @@
             var dummyIndex = 0;
             var dummyData = [[27.5, 28, 13], [28.1, 27, 12], [28.0, 27, 13], [27.8, 28, 13], [27.9, 28, 14]];
             var relayr = RELAYR.init({
-                appId: "0c5aead4-bab1-4626-ba8a-ad7a1ebad84f""
+                appId: "0c5aead4-bab1-4626-ba8a-ad7a1ebad84f"
             });
             // If you have a token and your device ID, you can start listening to your device without going through the login process
             document.getElementById("light").innerHTML = dummyData[dummyIndex][2];
             document.getElementById("humidity").innerHTML = dummyData[dummyIndex][1];
             document.getElementById("temperature").innerHTML = dummyData[dummyIndex][0];
-            setInterval
+            
             relayr.devices().getDeviceData({
                token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
                deviceId: "96f81dea-7eef-4819-ac8e-368edb954405", incomingData: function(data) {
@@ -417,7 +499,7 @@
                 }
             });
             relayr.devices().getDeviceData({
-                token: ""rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
+                token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
                 deviceId: "7d83f3d0-a63b-4446-813a-c9b7f0ea4f52", incomingData: function(data) {
                     document.getElementById("light").innerHTML = data.readings[1].value;
                 }
@@ -433,18 +515,18 @@
             function sendArduino() {
                 var commands = document.getElementById("commands").value;
                 relayr.devices().sendCommand({
-                    token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
-                    deviceId: "e8338260-24e5-439d-a9be-3043bee7e12b",
+                    token: "",
+                    deviceId: "",
                     command: {"path":"", "command":"down_ch_payload", "value": [1, 255, 0, 0]}
                 });
                 speak('Fancy!');
             }
             /*var hue = 0;
                 setInterval(function() {
-                    var res = hjs.setValue(10, { sat: 255, hue: hue, bri: 255, on: true });
+                    var res = hjs.setValue(10, { sat: 255, hue: hue, bri: 10, on: true });
                     hue += 250;
                 }, 250);*/
-            speak('welcome to greenbox!');
+            speak("welcome to greenbox");
         </script>
     </body>
 </html>
