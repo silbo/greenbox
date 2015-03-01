@@ -8,6 +8,22 @@
         <script src="relayr.js"></script>
         <script src="huejs.js"></script>
 
+	<script>
+	  window.setTimeout("unCover()", 3000);
+	  
+
+	  function unCover() {
+	  $("#cover").animate({
+	  opacity: "toggle"
+	  }, 3000, "linear", function() {
+	  $( this ).after( 
+	      $("#view1").animate({
+	        opacity: "toggle"
+	      }, 3000, "linear")
+          )});
+	  
+	  }
+	</script> 
         <title>WeedBox</title>
         <meta content="">
         <style>
