@@ -13,7 +13,9 @@
 	  window.setTimeout("unCover()", 3000);
 	  
 
-	  function unCover() {
+	  prepareSequence = ["plantBox", "placeBox", "conWater", "inFertilizer", "startGrow"]
+
+ 	  function unCover() {
 	  $("#cover").animate({
 	  opacity: "toggle"
 	  }, 3000, "linear", function() {
@@ -21,9 +23,20 @@
 	      $("#view1").animate({
 	        opacity: "toggle"
 	      }, 3000, "linear")
-          )});
-	  
+          )});	  
 	  }
+
+ 	  function unView1() {
+	  $("#view1").animate({
+	  opacity: "toggle"
+	  }, 3000, "linear", function() {
+	  $( this ).after( 
+	      $("#view2").animate({
+	        opacity: "toggle"
+	      }, 3000, "linear")
+          )});	  
+	  }
+	  
 	</script> 
         <title>WeedBox</title>
         <meta content="">
@@ -104,23 +117,71 @@
            height: 100px;
         }
 
-	    .buy {
+	.buy {
 	       background: url('Slides/Slide_2/Buy_icon.svg') no-repeat;
 	       cursor:pointer;
 	       border: none;
 	       width: 46px;
 	       height: 46px;
-	    }
+	       outline: none;
+	}
 
-	    .go {
+	.go {
 	       float: right;
 	       background: url('Slides/Slide_2/Go_icon.svg') no-repeat;
 	       cursor:pointer;
 	       border: none;
 	       width: 46px;
 	       height: 46px;
-	    }
+	       outline: none; 
+	}
+	
+	<!-- div#plantBox { -->
+	<!--     opacity: 0.5; -->
+	<!--     -webkit-filter: blur(2px); -->
+	<!--     -moz-filter: blur(2px); -->
+	<!--     -ms-filter: blur(2px); -->
+	<!--     -o-filter: blur(2px); -->
+	<!--     filter: blur(2px); -->
+	<!-- } -->
 
+	<!-- div#placeBox { -->
+	<!--     opacity: 0.5; -->
+	<!--     -webkit-filter: blur(2px); -->
+	<!--     -moz-filter: blur(2px); -->
+	<!--     -ms-filter: blur(2px); -->
+	<!--     -o-filter: blur(2px); -->
+	<!--     filter: blur(2px); -->
+	<!-- } -->
+
+	<!-- div#conWater { -->
+	<!--     opacity: 0.5; -->
+	<!--     -webkit-filter: blur(2px); -->
+	<!--     -moz-filter: blur(2px); -->
+	<!--     -ms-filter: blur(2px); -->
+	<!--     -o-filter: blur(2px); -->
+	<!--     filter: blur(2px); -->
+	<!-- } -->
+
+	<!-- div#inFertilizer { -->
+	<!--     opacity: 0.5; -->
+	<!--     -webkit-filter: blur(2px); -->
+	<!--     -moz-filter: blur(2px); -->
+	<!--     -ms-filter: blur(2px); -->
+	<!--     -o-filter: blur(2px); -->
+	<!--     filter: blur(2px); -->
+	<!-- } -->
+
+	<!-- div#startGrow { -->
+	<!--     opacity: 0.5; -->
+	<!--     -webkit-filter: blur(2px); -->
+	<!--     -moz-filter: blur(2px); -->
+	<!--     -ms-filter: blur(2px); -->
+	<!--     -o-filter: blur(2px); -->
+	<!--     filter: blur(2px); -->
+	<!-- } -->
+	    
+	 
         </style>
     </head>
     <body>
@@ -138,7 +199,7 @@
               <div style="clear: both;"></div>
 	      <p> Peppers </p>
               <input type="button" class="buy">
-              <input type="button" class="go">
+              <input type="button" class="go" onclick="unView1()">
 	    </div>
           </div>
           <div class="left">
@@ -147,7 +208,7 @@
                 <div style="clear: both;"></div>
 		<p> Tomato </p>
 		<input type="button" class="buy">
-		<input type="button" class="go">
+		<input type="button" class="go" onclick="unView1()">
 	    </div>
 	  </div>
           <div class="left">
@@ -156,7 +217,7 @@
                 <div style="clear: both;"></div>
 		<p> Chilli </p>
 		<input type="button" class="buy">
-		<input type="button" class="go">
+		<input type="button" class="go" onclick="unView1()">
             </div>
 	  </div>
           <div class="left">
@@ -165,7 +226,7 @@
                 <div style="clear: both;"></div>
 		<p> G.Onion </p>
 		<input type="button" class="buy">
-		<input type="button" class="go">
+		<input type="button" class="go" onclick="unView1()">
             </div>
 	  </div>
           <div class="left">
@@ -174,7 +235,7 @@
                 <div style="clear: both;"></div>
 		<p> Marijuana </p>
 		<input type="button" class="buy">
-		<input type="button" class="go">
+		<input type="button" class="go" onclick="unView1()">
             </div>
 	  </div>
           <div style="clear: both;"></div>
@@ -182,15 +243,15 @@
 
         <div id="view2">
 	  <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_3/Plant_plants_icon.svg" alt="logo">
+            <div id="plantBox" class="inner2">
+              <img  src="Slides/Slide_3/Plant_plants_icon.svg" alt="logo">
               <div style="clear: both;"></div>
               <p> Plant plants in the pots </p>
             </div>
           </div>
 	  
           <div class="left">
-            <div class="inner2">
+            <div id="placeBox" class="inner2">
               <img src="Slides/Slide_3/Plant_in_pot_icon.svg" alt="logo">
               <div style="clear: both;"></div>
               <p> Place into the grow box </p>
@@ -198,7 +259,7 @@
           </div>
 	  
           <div class="left">
-            <div class="inner2">
+            <div id="conWater" class="inner2">
               <img src="Slides/Slide_3/Place_hose_icon.svg" alt="logo">
               <div style="clear: both;"></div>
               <p> Connect water hoses </p>
@@ -206,7 +267,7 @@
           </div>
 	  
           <div class="left">
-            <div class="inner2">
+            <div id="inFertilizer" class="inner2">
               <img src="Slides/Slide_3/Fertilizer_icon.svg" alt="logo">
               <div style="clear: both;"></div>
               <p> Install fertilizer </p>
@@ -214,7 +275,7 @@
           </div>
 	  
           <div class="left">
-            <div class="inner2">
+            <div id="startGrow" class="inner2">
               <img src="Slides/Slide_3/Start_growing_icon.svg" alt="logo">
               <div style="clear: both;"></div>
               <p> Start growing </p>
