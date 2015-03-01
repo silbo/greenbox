@@ -8,7 +8,7 @@
         <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
         <script src="assets/relayr.js"></script>
         <script src="assets/huejs.js"></script>
-	<script>
+    <script>
          function speak(text){
            var msg = new SpeechSynthesisUtterance();
            var voices = speechSynthesis.getVoices();
@@ -21,95 +21,95 @@
            msg.lang = 'en-US';
                 speechSynthesis.speak(msg);
          }
-	 
-	 window.setTimeout("unCover()", 3000);
+     
+     window.setTimeout("unCover()", 3000);
 
-	 
- 	 function unCover() {
-	   $("#cover").animate({
-	     opacity: "toggle"
-	   }, 3000, "linear", function() {
-	       $( this ).after( 
-		 $("#view1").animate({
-	           opacity: "toggle"
-		 }, 3000, "linear")
-               )});	  
-	 }
-	 
- 	 function unView1() {
-	   $("#view1").animate({
-	     opacity: "toggle"
-	   }, 3000, "linear", function() {
-	       $( this ).after( 
-		 $("#view2").animate({
-	           opacity: "toggle"
-		 }, 1000, "linear", function() {
-		     $( this ).after( 
-	               uncoverPlantBox()
-		     )
-		   }
-				     )
-               )});	  
-	 }
-	 
-	 prepareSequence = ["#plantBox", "#placeBox", "#conWater", "#inFertilizer", "#startGrow"]
-	 
-	 var guideTimeout = 3000
-	 
-	 function uncoverPlantBox() {
-	   speak("Plant plants in the pots.")
-	   $("#plantBox").animate({
-	     opacity: 1
-	   }, guideTimeout, "linear", function() {
-	       $( this ).after(
-		 blurElement("#plantBox", 0, uncoverPlaceBox())
-	       )});
-	 }
+     
+     function unCover() {
+       $("#cover").animate({
+         opacity: "toggle"
+       }, 3000, "linear", function() {
+           $( this ).after( 
+         $("#view1").animate({
+               opacity: "toggle"
+         }, 3000, "linear")
+               )});   
+     }
+     
+     function unView1() {
+       $("#view1").animate({
+         opacity: "toggle"
+       }, 3000, "linear", function() {
+           $( this ).after( 
+         $("#view2").animate({
+               opacity: "toggle"
+         }, 1000, "linear", function() {
+             $( this ).after( 
+                   uncoverPlantBox()
+             )
+           }
+                     )
+               )});   
+     }
+     
+     prepareSequence = ["#plantBox", "#placeBox", "#conWater", "#inFertilizer", "#startGrow"]
+     
+     var guideTimeout = 3000
+     
+     function uncoverPlantBox() {
+       speak("Plant plants in the pots.")
+       $("#plantBox").animate({
+         opacity: 1
+       }, guideTimeout, "linear", function() {
+           $( this ).after(
+         blurElement("#plantBox", 0, uncoverPlaceBox())
+           )});
+     }
 
-	 function uncoverPlaceBox() {
-	   speak("Place pots into the greenbox.")
-	   $("#placeBox").animate({
-	     opacity: 1
-	   }, guideTimeout, "linear", function() {
-	       $( this ).after(
-		 blurElement("#placeBox", 0, uncoverConWater())
-	       )});
-	 }
+     function uncoverPlaceBox() {
+       speak("Place pots into the greenbox.")
+       $("#placeBox").animate({
+         opacity: 1
+       }, guideTimeout, "linear", function() {
+           $( this ).after(
+         blurElement("#placeBox", 0, uncoverConWater())
+           )});
+     }
 
-	 function uncoverConWater() {
-	   speak("Connect water hoses.")
-	   $("#conWater").animate({
-	     opacity: 1
-	   }, guideTimeout, "linear", function() {
-	       $( this ).after(
-		 blurElement("#conWater", 0, uncoverInFertilizer())
-	       )});
-	 }
+     function uncoverConWater() {
+       speak("Connect water hoses.")
+       $("#conWater").animate({
+         opacity: 1
+       }, guideTimeout, "linear", function() {
+           $( this ).after(
+         blurElement("#conWater", 0, uncoverInFertilizer())
+           )});
+     }
 
-	 function uncoverInFertilizer() {
-	   speak("Install Fertilizer.")
-	   $("#inFertilizer").animate({
-	     opacity: 1
-	   }, guideTimeout, "linear", function() {
-	       $( this ).after(
-		 blurElement("#inFertilizer", 0, uncoverStartGrow())
-	       )});
-	 }
+     function uncoverInFertilizer() {
+       speak("Install Fertilizer.")
+       $("#inFertilizer").animate({
+         opacity: 1
+       }, guideTimeout, "linear", function() {
+           $( this ).after(
+         blurElement("#inFertilizer", 0, uncoverStartGrow())
+           )});
+     }
 
-	 function uncoverStartGrow() {
-	   speak("Start growing.")
-	   $("#startGrow").animate({
-	     opacity: 1
-	   }, guideTimeout, "linear", function() {
-	       $( this ).after(
-		 blurElement("#startGrow", 0)
-	       )});
-	 }
-				 
+     function uncoverStartGrow() {
+       speak("Start growing.")
+       $("#startGrow").animate({
+         opacity: 1
+       }, guideTimeout, "linear", function() {
+           $( this ).after(
+         blurElement("#startGrow", 0)
+           )});
+     }
+                 
 
-	 function blurElement(element, size, callback) {
-	   var filterVal = 'blur(' + size + 'px)';
-	   $(element)
+     function blurElement(element, size, callback) {
+       var filterVal = 'blur(' + size + 'px)';
+       $(element)
                .css('filter', filterVal)
                .css('webkitFilter', filterVal)
                .css('mozFilter', filterVal)
@@ -119,12 +119,12 @@
                .css('-webkit-transition', 'all 0.5s ease-out')
                .css('-moz-transition', 'all 0.5s ease-out')
                .css('-o-transition', 'all 0.5s ease-out');
-	   
-	 } 
-	 
-	 
-	 
-	</script> 
+       
+     } 
+     
+     
+     
+    </script> 
         <title>WeedBox</title>
         <meta content="">
         <style>
@@ -135,55 +135,55 @@
                 background-image: url(Slides/Slide_1/Background.png);
                 background-repeat: no-repeat;
                 background-size: 100% auto;
-	        margin: 0;
-	    }
+            margin: 0;
+        }
 
-	    div#top {
-	       height: 200px;
-	    }
-	    div#cover {
-	        display: block;
-	        margin-left: auto;
-	        margin-right: auto;
-	    }
+        div#top {
+           height: 200px;
+        }
+        div#cover {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
            div#view1 {
-	        display: none;
+            display: none;
                 background-image: url(Slides/Slide_2/Background_transparency.svg);
                 background-size: 100%;
-	        height: 280px;
-	    }
+            height: 280px;
+        }
 
            div#view2 {
-	        display: none;
+            display: none;
                 background-image: url(Slides/Slide_2/Background_transparency.svg);
                 background-size: 100%;
-	        height: 280px;
-	    }
-	    div#debug {
-	        display: none;
-	    }
+            height: 280px;
+        }
+        div#debug {
+            display: none;
+        }
 
-            div.left {	       
+            div.left {         
                float: left;
-	       width: 20%;
-	       position: relative;
-	       top: 35px;
+           width: 20%;
+           position: relative;
+           top: 35px;
             }
-	    div.inner {
-	       width: 119px;
-	       margin-left: auto;
-	       margin-right: auto;
-	    }
+        div.inner {
+           width: 119px;
+           margin-left: auto;
+           margin-right: auto;
+        }
         
-	    div.inner > p {
-	       color: white;
-	       font-size: 15pt;
-	       font-weight: 200;
-	       margin: 6px 0 10px 0;
-	       text-align: center;
-	       letter-spacing: 2px;
-	    }
+        div.inner > p {
+           color: white;
+           font-size: 15pt;
+           font-weight: 200;
+           margin: 6px 0 10px 0;
+           text-align: center;
+           letter-spacing: 2px;
+        }
         div.inner2 {
             text-align: center;
             margin-bottom: auto;
@@ -204,139 +204,139 @@
            height: 100px;
         }
 
-	.buy {
-	       background: url('Slides/Slide_2/Buy_icon.svg') no-repeat;
-	       cursor:pointer;
-	       border: none;
-	       width: 46px;
-	       height: 46px;
-	       outline: none;
-	}
+    .buy {
+           background: url('Slides/Slide_2/Buy_icon.svg') no-repeat;
+           cursor:pointer;
+           border: none;
+           width: 46px;
+           height: 46px;
+           outline: none;
+    }
 
-	.go {
-	       float: right;
-	       background: url('Slides/Slide_2/Go_icon.svg') no-repeat;
-	       cursor:pointer;
-	       border: none;
-	       width: 46px;
-	       height: 46px;
-	       outline: none; 
-	}
-	
-	div#plantBox {
-	    opacity: 0.5;
-	    -webkit-filter: blur(2px);
-	    -moz-filter: blur(2px);
-	    -ms-filter: blur(2px);
-	    -o-filter: blur(2px);
-	    filter: blur(2px);
-	}
+    .go {
+           float: right;
+           background: url('Slides/Slide_2/Go_icon.svg') no-repeat;
+           cursor:pointer;
+           border: none;
+           width: 46px;
+           height: 46px;
+           outline: none; 
+    }
+    
+    div#plantBox {
+        opacity: 0.5;
+        -webkit-filter: blur(2px);
+        -moz-filter: blur(2px);
+        -ms-filter: blur(2px);
+        -o-filter: blur(2px);
+        filter: blur(2px);
+    }
 
-	div#placeBox {
-	    opacity: 0.5;
-	    -webkit-filter: blur(2px);
-	    -moz-filter: blur(2px);
-	    -ms-filter: blur(2px);
-	    -o-filter: blur(2px);
-	    filter: blur(2px);
-	}
+    div#placeBox {
+        opacity: 0.5;
+        -webkit-filter: blur(2px);
+        -moz-filter: blur(2px);
+        -ms-filter: blur(2px);
+        -o-filter: blur(2px);
+        filter: blur(2px);
+    }
 
-	div#conWater {
-	    opacity: 0.5;
-	    -webkit-filter: blur(2px);
-	    -moz-filter: blur(2px);
-	    -ms-filter: blur(2px);
-	    -o-filter: blur(2px);
-	    filter: blur(2px);
-	}
+    div#conWater {
+        opacity: 0.5;
+        -webkit-filter: blur(2px);
+        -moz-filter: blur(2px);
+        -ms-filter: blur(2px);
+        -o-filter: blur(2px);
+        filter: blur(2px);
+    }
 
-	div#inFertilizer {
-	    opacity: 0.5;
-	    -webkit-filter: blur(2px);
-	    -moz-filter: blur(2px);
-	    -ms-filter: blur(2px);
-	    -o-filter: blur(2px);
-	    filter: blur(2px);
-	}
+    div#inFertilizer {
+        opacity: 0.5;
+        -webkit-filter: blur(2px);
+        -moz-filter: blur(2px);
+        -ms-filter: blur(2px);
+        -o-filter: blur(2px);
+        filter: blur(2px);
+    }
 
-	div#startGrow {
-	    opacity: 0.5;
-	    -webkit-filter: blur(2px);
-	    -moz-filter: blur(2px);
-	    -ms-filter: blur(2px);
-	    -o-filter: blur(2px);
-	    filter: blur(2px);
-	}
-	    
-	 
+    div#startGrow {
+        opacity: 0.5;
+        -webkit-filter: blur(2px);
+        -moz-filter: blur(2px);
+        -ms-filter: blur(2px);
+        -o-filter: blur(2px);
+        filter: blur(2px);
+    }
+        
+     
         </style>
     </head>
     <body>
         <div id="top">
-	</div>
-	<div id="cover">
+    </div>
+    <div id="cover">
           <div class="inner">
-	    <img src="Slides/Slide_1/Logo.svg" alt="logo">
-	  </div>
-	</div>
+        <img src="Slides/Slide_1/Logo.svg" alt="logo">
+      </div>
+    </div>
         <div id="view1">
           <div class="left">
-	    <div class="inner">
+        <div class="inner">
               <img src="Slides/Slide_2/Peppers_icon.svg" alt="logo">
               <div style="clear: both;"></div>
-	      <p> Peppers </p>
+          <p> Peppers </p>
               <input type="button" class="buy">
               <input type="button" class="go" onclick="unView1()">
-	    </div>
+        </div>
           </div>
           <div class="left">
-	    <div class="inner">
+        <div class="inner">
                 <img src="Slides/Slide_2/Tomato_icon.svg" alt="logo">
                 <div style="clear: both;"></div>
-		<p> Tomato </p>
-		<input type="button" class="buy">
-		<input type="button" class="go" onclick="unView1()">
-	    </div>
-	  </div>
+        <p> Tomato </p>
+        <input type="button" class="buy">
+        <input type="button" class="go" onclick="unView1()">
+        </div>
+      </div>
           <div class="left">
-	    <div class="inner">
+        <div class="inner">
                 <img src="Slides/Slide_2/Chilli_icon.svg" alt="logo">
                 <div style="clear: both;"></div>
-		<p> Chilli </p>
-		<input type="button" class="buy">
-		<input type="button" class="go" onclick="unView1()">
+        <p> Chilli </p>
+        <input type="button" class="buy">
+        <input type="button" class="go" onclick="unView1()">
             </div>
-	  </div>
+      </div>
           <div class="left">
-	    <div class="inner">
+        <div class="inner">
                 <img src="Slides/Slide_2/Green_onion_icon.svg" alt="logo">
                 <div style="clear: both;"></div>
-		<p> G.Onion </p>
-		<input type="button" class="buy">
-		<input type="button" class="go" onclick="unView1()">
+        <p> G.Onion </p>
+        <input type="button" class="buy">
+        <input type="button" class="go" onclick="unView1()">
             </div>
-	  </div>
+      </div>
           <div class="left">
-	    <div class="inner">
+        <div class="inner">
                 <img src="Slides/Slide_2/Marijuana_icon.svg" alt="logo">
                 <div style="clear: both;"></div>
-		<p> Marijuana </p>
-		<input type="button" class="buy">
-		<input type="button" class="go" onclick="unView1()">
+        <p> Marijuana </p>
+        <input type="button" class="buy">
+        <input type="button" class="go" onclick="unView1()">
             </div>
-	  </div>
+      </div>
           <div style="clear: both;"></div>
         </div>
 
         <div id="view2">
-	  <div class="left">
+      <div class="left">
             <div id="plantBox" class="inner2">
               <img  src="Slides/Slide_3/Plant_plants_icon.svg" alt="logo">
               <div style="clear: both;"></div>
               <p> Plant plants in the pots </p>
             </div>
           </div>
-	  
+      
           <div class="left">
             <div id="placeBox" class="inner2">
               <img src="Slides/Slide_3/Plant_in_pot_icon.svg" alt="logo">
@@ -344,7 +344,7 @@
               <p> Place into the greenbox </p>
             </div>
           </div>
-	  
+      
           <div class="left">
             <div id="conWater" class="inner2">
               <img src="Slides/Slide_3/Place_hose_icon.svg" alt="logo">
@@ -352,7 +352,7 @@
               <p> Connect water hoses </p>
             </div>
           </div>
-	  
+      
           <div class="left">
             <div id="inFertilizer" class="inner2">
               <img src="Slides/Slide_3/Fertilizer_icon.svg" alt="logo">
@@ -360,7 +360,7 @@
               <p> Install fertilizer </p>
             </div>
           </div>
-	  
+      
           <div class="left">
             <div id="startGrow" class="inner2">
               <img src="Slides/Slide_3/Start_growing_icon.svg" alt="logo">
@@ -368,9 +368,9 @@
               <p> Start growing </p>
             </div>
           </div>
-	  
+      
           <div style="clear: both;"></div>
-	</div>
+    </div>
 
     <div id="view3">
         <div class="left">
@@ -452,7 +452,7 @@
           </div>
     </div>
 
-	<div id="debug">
+    <div id="debug">
           <p>Light: <span id="light"></span></p>
           <p>Humidity: <span id="humidity"></span></p>
           <p>Temperature: <span id="temperature"></span></p>
@@ -463,7 +463,7 @@
           <input type="text" id="sat" value="10" placeholder="sat"></input>
           <input type="text" id="brightness" value="10" placeholder="brightness"></input>
           <input type="button" value="send Hue" onclick="javascript:sendToHue();"></input>
-	</div>
+    </div>
           <script>
             //$.get("https://1aim.com/smsgateway/", { sender: "GreenBox", number: "017697888820", message: "jo wazzap" });
             var hjs = HueJS({
