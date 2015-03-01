@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
@@ -17,47 +17,92 @@
             body {
                 background-image: url(Slides/Slide_1/Background.png);
                 background-repeat: no-repeat;
-                background-position: center middle;
-            }
+                
+	        margin: 0;
+	    }
             div#background {
+	        display: none;
                 background-image: url(Slides/Slide_2/Background_transparency.svg);
+	        height: 280px;
+	    }
+	    div#cover {
+	        margin-left: auto;
+	        margin-right: auto;
+	    }
+            div.left {	       
+               float: left;
+	       width: 20%;
+	       position: relative;
+	       top: 35px;
             }
-            div.left {
-                float: left;
-                width: 200px;
-            }
+	    div.inner {
+	       width: 119px;
+	       margin-left: auto;
+	       margin-right: auto;
+	    }
+	    div.inner > p {
+	       color: white;
+	       font-size: 15pt;
+	       font-weight: 200;
+	       margin: 6px 0 10px 0;
+	       text-align: center;
+	       letter-spacing: 2px;
+	    }
+
         </style>
     </head>
     <body>
         <h1>WeedBox</h1>
-        <img src="Slides/Slide_1/Logo.svg" alt="logo">
-
+	<div id="cover">
+          <img src="Slides/Slide_1/Logo.svg" alt="logo">
+	</div>
         <div id="background">
-            <div class="left">
-                <img src="Slides/Slide_2/Green_onion_icon.svg" alt="logo">
+          <div class="left">
+	    <div class="inner">
+              <img src="Slides/Slide_2/Peppers_icon.svg" alt="logo">
+              <div style="clear: both;"></div>
+	      <p> Peppers </p>
+              <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+              <img src="Slides/Slide_2/Go_icon.svg" alt="logo" style="float:right">
+	    </div>
+          </div>
+          <div class="left">
+	    <div class="inner">
+                <img src="Slides/Slide_2/Tomato_icon.svg" alt="logo">
                 <div style="clear: both;"></div>
+		<p> Tomato </p>
                 <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
-                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo" style="float:right">
             </div>
-            <div class="left">
-                <img src="Slides/Slide_2/Marijuana_icon.svg" alt="logo">
-                <div style="clear: both;"></div>
-                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
-                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
-            </div>
-            <div class="left">
-                <img src="Slides/Slide_2/Peppers_icon.svg" alt="logo">
-                <div style="clear: both;"></div>
-                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
-                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
-            </div>
-            <div class="left">
+	  </div>
+          <div class="left">
+	    <div class="inner">
                 <img src="Slides/Slide_2/Chilli_icon.svg" alt="logo">
                 <div style="clear: both;"></div>
+		<p> Chilli </p>
                 <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
-                <img src="Slides/Slide_2/Go_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo" style="float:right">
             </div>
-            <div style="clear: both;"></div>
+	  </div>
+          <div class="left">
+	    <div class="inner">
+                <img src="Slides/Slide_2/Green_onion_icon.svg" alt="logo">
+                <div style="clear: both;"></div>
+		<p> G.Onion </p>
+                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo" style="float:right">
+            </div>
+	  </div>
+          <div class="left">
+	    <div class="inner">
+                <img src="Slides/Slide_2/Marijuana_icon.svg" alt="logo">
+                <div style="clear: both;"></div>
+		<p> Marijuana </p>
+                <img src="Slides/Slide_2/Buy_icon.svg" alt="logo">
+                <img src="Slides/Slide_2/Go_icon.svg" alt="logo" style="float:right">
+            </div>
+	  </div>
+          <div style="clear: both;"></div>
         </div>
 
         <p>Light: <span id="light"></span></p>
@@ -96,8 +141,8 @@
             document.getElementById("temperature").innerHTML = dummyData[dummyIndex][0];
             setInterval
             relayr.devices().getDeviceData({
-                token: "",
-                deviceId: "", incomingData: function(data) {
+               token: "",
+               deviceId: "", incomingData: function(data) {
                     document.getElementById("humidity").innerHTML = data.readings[1].value;
                     document.getElementById("temperature").innerHTML = data.readings[0].value;
                 }
@@ -121,7 +166,7 @@
                 relayr.devices().sendCommand({
                     token: "",
                     deviceId: "",
-                    command: {"path":"", "command":"down_ch_payload", "value": [0,1]}
+                    command: {"path":"", "command":"down_ch_payload", "value": [1, 255, 0, 0]}
                 });
                 speak('Fancy!');
             }
