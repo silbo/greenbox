@@ -335,23 +335,23 @@
             var dummyIndex = 0;
             var dummyData = [[27.5, 28, 13], [28.1, 27, 12], [28.0, 27, 13], [27.8, 28, 13], [27.9, 28, 14]];
             var relayr = RELAYR.init({
-                appId: ""
+                appId: "0c5aead4-bab1-4626-ba8a-ad7a1ebad84f"
             });
             // If you have a token and your device ID, you can start listening to your device without going through the login process
             document.getElementById("light").innerHTML = dummyData[dummyIndex][2];
             document.getElementById("humidity").innerHTML = dummyData[dummyIndex][1];
             document.getElementById("temperature").innerHTML = dummyData[dummyIndex][0];
-            setInterval
+            
             relayr.devices().getDeviceData({
-               token: "",
-               deviceId: "", incomingData: function(data) {
+               token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
+               deviceId: "96f81dea-7eef-4819-ac8e-368edb954405", incomingData: function(data) {
                     document.getElementById("humidity").innerHTML = data.readings[1].value;
                     document.getElementById("temperature").innerHTML = data.readings[0].value;
                 }
             });
             relayr.devices().getDeviceData({
-                token: "",
-                deviceId: "", incomingData: function(data) {
+                token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
+                deviceId: "7d83f3d0-a63b-4446-813a-c9b7f0ea4f52", incomingData: function(data) {
                     document.getElementById("light").innerHTML = data.readings[1].value;
                 }
             });
