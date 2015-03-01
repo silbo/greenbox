@@ -7,35 +7,123 @@
         <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
         <script src="relayr.js"></script>
         <script src="huejs.js"></script>
-
+	
 	<script>
-	  window.setTimeout("unCover()", 3000);
-	  
+         function speak(text){
+           var msg = new SpeechSynthesisUtterance();
+           var voices = speechSynthesis.getVoices();
+           msg.voice = voices[0]; // Note: some voices don't support altering params
+           msg.voiceURI = 'Google UK English Female';
+           msg.volume = 1; // 0 to 1
+           msg.rate = 0.1; // 0.1 to 10
+           msg.pitch = 0; //0 to 2
+           msg.text = text;
+           msg.lang = 'en-US';
+                speechSynthesis.speak(msg);
+         }
+	 
+	 window.setTimeout("unCover()", 3000);
 
-	  prepareSequence = ["plantBox", "placeBox", "conWater", "inFertilizer", "startGrow"]
+	 
+ 	 function unCover() {
+	   $("#cover").animate({
+	     opacity: "toggle"
+	   }, 3000, "linear", function() {
+	       $( this ).after( 
+		 $("#view1").animate({
+	           opacity: "toggle"
+		 }, 3000, "linear")
+               )});	  
+	 }
+	 
+ 	 function unView1() {
+	   $("#view1").animate({
+	     opacity: "toggle"
+	   }, 3000, "linear", function() {
+	       $( this ).after( 
+		 $("#view2").animate({
+	           opacity: "toggle"
+		 }, 1000, "linear", function() {
+		     $( this ).after( 
+	               uncoverPlantBox()
+		     )
+		   }
+				     )
+               )});	  
+	 }
+	 
+	 prepareSequence = ["#plantBox", "#placeBox", "#conWater", "#inFertilizer", "#startGrow"]
+	 
+	 var guideTimeout = 3000
+	 
+	 function uncoverPlantBox() {
+	   speak("Plant plants in the pots.")
+	   $("#plantBox").animate({
+	     opacity: 1
+	   }, guideTimeout, "linear", function() {
+	       $( this ).after(
+		 blurElement("#plantBox", 0, uncoverPlaceBox())
+	       )});
+	 }
 
- 	  function unCover() {
-	  $("#cover").animate({
-	  opacity: "toggle"
-	  }, 3000, "linear", function() {
-	  $( this ).after( 
-	      $("#view1").animate({
-	        opacity: "toggle"
-	      }, 3000, "linear")
-          )});	  
-	  }
+	 function uncoverPlaceBox() {
+	   speak("Place pots into the greenbox.")
+	   $("#placeBox").animate({
+	     opacity: 1
+	   }, guideTimeout, "linear", function() {
+	       $( this ).after(
+		 blurElement("#placeBox", 0, uncoverConWater())
+	       )});
+	 }
 
- 	  function unView1() {
-	  $("#view1").animate({
-	  opacity: "toggle"
-	  }, 3000, "linear", function() {
-	  $( this ).after( 
-	      $("#view2").animate({
-	        opacity: "toggle"
-	      }, 3000, "linear")
-          )});	  
-	  }
-	  
+	 function uncoverConWater() {
+	   speak("Connect water hoses.")
+	   $("#conWater").animate({
+	     opacity: 1
+	   }, guideTimeout, "linear", function() {
+	       $( this ).after(
+		 blurElement("#conWater", 0, uncoverInFertilizer())
+	       )});
+	 }
+
+	 function uncoverInFertilizer() {
+	   speak("Install Fertilizer.")
+	   $("#inFertilizer").animate({
+	     opacity: 1
+	   }, guideTimeout, "linear", function() {
+	       $( this ).after(
+		 blurElement("#inFertilizer", 0, uncoverStartGrow())
+	       )});
+	 }
+
+	 function uncoverStartGrow() {
+	   speak("Start growing.")
+	   $("#startGrow").animate({
+	     opacity: 1
+	   }, guideTimeout, "linear", function() {
+	       $( this ).after(
+		 blurElement("#startGrow", 0)
+	       )});
+	 }
+				 
+
+	 function blurElement(element, size, callback) {
+	   var filterVal = 'blur(' + size + 'px)';
+	   $(element)
+               .css('filter', filterVal)
+               .css('webkitFilter', filterVal)
+               .css('mozFilter', filterVal)
+               .css('oFilter', filterVal)
+               .css('msFilter', filterVal)
+               .css('transition', 'all 0.5s ease-out')
+               .css('-webkit-transition', 'all 0.5s ease-out')
+               .css('-moz-transition', 'all 0.5s ease-out')
+               .css('-o-transition', 'all 0.5s ease-out');
+	   
+	 } 
+	 
+	 
+	 
 	</script> 
         <title>WeedBox</title>
         <meta content="">
@@ -135,50 +223,50 @@
 	       outline: none; 
 	}
 	
-	<!-- div#plantBox { -->
-	<!--     opacity: 0.5; -->
-	<!--     -webkit-filter: blur(2px); -->
-	<!--     -moz-filter: blur(2px); -->
-	<!--     -ms-filter: blur(2px); -->
-	<!--     -o-filter: blur(2px); -->
-	<!--     filter: blur(2px); -->
-	<!-- } -->
+	div#plantBox {
+	    opacity: 0.5;
+	    -webkit-filter: blur(2px);
+	    -moz-filter: blur(2px);
+	    -ms-filter: blur(2px);
+	    -o-filter: blur(2px);
+	    filter: blur(2px);
+	}
 
-	<!-- div#placeBox { -->
-	<!--     opacity: 0.5; -->
-	<!--     -webkit-filter: blur(2px); -->
-	<!--     -moz-filter: blur(2px); -->
-	<!--     -ms-filter: blur(2px); -->
-	<!--     -o-filter: blur(2px); -->
-	<!--     filter: blur(2px); -->
-	<!-- } -->
+	div#placeBox {
+	    opacity: 0.5;
+	    -webkit-filter: blur(2px);
+	    -moz-filter: blur(2px);
+	    -ms-filter: blur(2px);
+	    -o-filter: blur(2px);
+	    filter: blur(2px);
+	}
 
-	<!-- div#conWater { -->
-	<!--     opacity: 0.5; -->
-	<!--     -webkit-filter: blur(2px); -->
-	<!--     -moz-filter: blur(2px); -->
-	<!--     -ms-filter: blur(2px); -->
-	<!--     -o-filter: blur(2px); -->
-	<!--     filter: blur(2px); -->
-	<!-- } -->
+	div#conWater {
+	    opacity: 0.5;
+	    -webkit-filter: blur(2px);
+	    -moz-filter: blur(2px);
+	    -ms-filter: blur(2px);
+	    -o-filter: blur(2px);
+	    filter: blur(2px);
+	}
 
-	<!-- div#inFertilizer { -->
-	<!--     opacity: 0.5; -->
-	<!--     -webkit-filter: blur(2px); -->
-	<!--     -moz-filter: blur(2px); -->
-	<!--     -ms-filter: blur(2px); -->
-	<!--     -o-filter: blur(2px); -->
-	<!--     filter: blur(2px); -->
-	<!-- } -->
+	div#inFertilizer {
+	    opacity: 0.5;
+	    -webkit-filter: blur(2px);
+	    -moz-filter: blur(2px);
+	    -ms-filter: blur(2px);
+	    -o-filter: blur(2px);
+	    filter: blur(2px);
+	}
 
-	<!-- div#startGrow { -->
-	<!--     opacity: 0.5; -->
-	<!--     -webkit-filter: blur(2px); -->
-	<!--     -moz-filter: blur(2px); -->
-	<!--     -ms-filter: blur(2px); -->
-	<!--     -o-filter: blur(2px); -->
-	<!--     filter: blur(2px); -->
-	<!-- } -->
+	div#startGrow {
+	    opacity: 0.5;
+	    -webkit-filter: blur(2px);
+	    -moz-filter: blur(2px);
+	    -ms-filter: blur(2px);
+	    -o-filter: blur(2px);
+	    filter: blur(2px);
+	}
 	    
 	 
         </style>
@@ -253,7 +341,7 @@
             <div id="placeBox" class="inner2">
               <img src="Slides/Slide_3/Plant_in_pot_icon.svg" alt="logo">
               <div style="clear: both;"></div>
-              <p> Place into the grow box </p>
+              <p> Place into the greenbox </p>
             </div>
           </div>
 	  
@@ -350,18 +438,6 @@
                     command: {"path":"", "command":"down_ch_payload", "value": [1, 255, 0, 0]}
                 });
                 speak('Fancy!');
-            }
-            function speak(text){
-                var msg = new SpeechSynthesisUtterance();
-                var voices = speechSynthesis.getVoices();
-                msg.voice = voices[4]; // Note: some voices don't support altering params
-                msg.voiceURI = 'Google UK English Female';
-                msg.volume = 1; // 0 to 1
-                msg.rate = 0.1; // 0.1 to 10
-                msg.pitch = 0; //0 to 2
-                msg.text = text;
-                msg.lang = 'en-GB';
-                speechSynthesis.speak(msg);
             }
             /*var hue = 0;
                 setInterval(function() {
