@@ -1,2 +1,2 @@
-# weedbox
-Weedbox to grow plants in a box
+# greenbox
+Greenbox to grow plants in a box
