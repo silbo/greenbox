@@ -7,8 +7,44 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
         <script src="assets/relayr.js"></script>
-        <script src="assets/huejs.js"></script>
+	 <script src="assets/huejs.js"></script>
 	<script>
+            var relayr = RELAYR.init({
+                appId: "0c5aead4-bab1-4626-ba8a-ad7a1ebad84f"
+            });
+
+            function sendLight1() {
+                var commands = document.getElementById("commands").value;
+                relayr.devices().sendCommand({
+                    token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
+                    deviceId: "e8338260-24e5-439d-a9be-3043bee7e12b",
+                    command: {"path":"", "command":"down_ch_payload", "value": [1, 255, 255, 127]}
+                });
+                speak('Fancy!');
+            }
+
+            function sendLight2() {
+                var commands = document.getElementById("commands").value;
+                relayr.devices().sendCommand({
+                    token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
+                    deviceId: "e8338260-24e5-439d-a9be-3043bee7e12b",
+                    command: {"path":"", "command":"down_ch_payload", "value": [1, 255, 0, 255]}
+                });
+                speak('Fancy!');
+            }
+
+	   function sendPump() {
+                var commands = document.getElementById("commands").value;
+                relayr.devices().sendCommand({
+                    token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
+                    deviceId: "e8338260-24e5-439d-a9be-3043bee7e12b",
+                    command: {"path":"", "command":"down_ch_payload", "value": [0, 0, 30]}
+                });
+                speak('Fancy!');
+            }
+
+
+
          function speak(text){
            var msg = new SpeechSynthesisUtterance();
            var voices = speechSynthesis.getVoices();
@@ -26,6 +62,7 @@
 
 	 
  	 function unCover() {
+	   sendLight1();
 	   $("#cover").animate({
 	     opacity: "toggle"
 	   }, 3000, "linear", function() {
@@ -135,8 +172,64 @@
 		 $("#top").css("display", "none"),
 		 $("#view3").animate({
 	           opacity: "toggle"
-		 }, 1000, "linear")
+		 }, 1000, "linear", function() {
+		     $( this ).after(
+		       pask()
+		     )
+		   })
                )});	  
+	 }
+	 
+	 var stop = 0;
+
+	 function pask() {
+	   var adder = 1;
+	   var padding = 185;
+	   var interval = setInterval(function() {
+	     $("#marker").css("padding-left", padding+"px");
+           padding += adder;
+             if (padding == 370) {
+               $("#timeline").attr("src", "Slides/Slide_4/timeline1_icon.svg");
+             } else if (padding == 560) {
+               $("#timeline").attr("src", "Slides/Slide_4/timeline2_icon.svg");
+             } else if ( padding == 750) {
+	       
+	       if(stop != 1) {
+		 sendLight2();
+		 sendPump();
+	 
+		 //$.get("https://1aim.com/smsgateway/", { sender: "GreenBox", number: "017697888820", message: "Change Fertilizer on your Greenbox" });
+		 sendToHue();
+		 stop = 1;
+	       }
+	       
+               $("#timeline").attr("src", "Slides/Slide_4/timeline3_icon.svg");
+               $("#fertilizer").css("position", "relative");
+               $("#fertilizer").css("left", "0px");
+               $("#fertilizer").css("top", "0px");
+               $("#timeline").hide();
+               $("#marker").hide();
+               $(".timeline_left").hide();
+               $(".timeline_right").hide();
+
+               $("#fertilizer").show();
+
+               $("#fertilizer").css("cursor", "pointer");
+               $("#view3").css("background-image", "url(Slides/Slide_2/Background_transparency.svg)");
+               adder = 0;
+	       
+               $("#fertilizer").on("click", function() {
+                 $("#view3").css("background-image", "");
+                 $("#fertilizer").hide();
+                 $("#timeline").show();
+                 $("#marker").show();
+                 adder = 1;
+               });
+	     } else if (padding == 930) {
+               $("#timeline").attr("src", "Slides/Slide_4/timeline4_icon.svg");
+	     }   
+	     if (padding > 1160) clearInterval(interval);
+	   }, 1);
 	 }
 	 
 	 
@@ -187,6 +280,9 @@
 	        margin-right: 20%;
 	        padding-left: 30px;
 	        padding-right: 30px;
+	        color: #FFFFFF;
+	        font-weight: 300;
+	        font-size: 16pt;
 	    }
 
 	    div#debug {
@@ -360,9 +456,9 @@
 	   bottom: 100px;
 	   right: 100px
 	 }
-
-	 .timeline_bottom {
-
+	 
+	 .timeline_bottom img {
+	   width: 100%;
 	 }
 	 
         </style>
@@ -523,8 +619,26 @@
 	  </div>
 	  
           <div class="timeline_bottom">
-            <div class="">
-              <img src="Slides/Slide_4/timeline_icon.svg" alt="logo" width="100%">
+      
+	    <div class="">
+
+	      <img id="ball1" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+	      <img id="ball2" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+	      <img id="ball3" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+	      <img id="ball4" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+
+	      <img id="timeline" src="Slides/Slide_4/timeline_icon.svg" alt="logo">
+	      <img id="marker" src="Slides/Slide_4/timeline_marker_icon.svg" alt="logo" width="20px" height="20px">
+	      
+	      <div id="fertilizer" style="display:none;">
+		<div class="inner">
+		  <img src="Slides/Slide_Fertilizer_needed/Fertilizer_flowering_icon.svg" alt="logo">
+		  <p style="color: white; font-size: 11pt; font-weight: 200; margin: 6px 0 10px 0; text-align: center; letter-spacing: 2px;"> please replace the fertilizer </p>
+		</div>
+	      </div>
+
+
+
             </div>
           </div>
 	</div>
@@ -591,12 +705,15 @@
             function sendArduino() {
                 var commands = document.getElementById("commands").value;
                 relayr.devices().sendCommand({
-                    token: "",
+                    token: "rgBqjtsDlp-C39T7QEvLs.Ozem5eDMWi",
                     deviceId: "",
                     command: {"path":"", "command":"down_ch_payload", "value": [1, 255, 0, 0]}
                 });
                 speak('Fancy!');
             }
+
+
+
 
          function speak(text){
            var msg = new SpeechSynthesisUtterance();
