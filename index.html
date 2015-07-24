@@ -3,7 +3,7 @@
     <head>
       <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
-        <script type="text/javascript" src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
+        <script type="text/javascript" src="https://static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
         <script src="assets/relayr.js"></script>
@@ -32,7 +32,8 @@
            $( this ).after( 
          $("#view1").animate({
                opacity: "toggle"
-         }, 3000, "linear")
+         }, 3000, "linear"),
+         speak("Choose your Grow, or get a starter kit from our supply store")
                )});   
      }
      
@@ -52,57 +53,61 @@
                )});   
      }
      
-     prepareSequence = ["#plantBox", "#placeBox", "#conWater", "#inFertilizer", "#startGrow"]
-     
+
      var guideTimeout = 3000
      
      function uncoverPlantBox() {
-       speak("Plant plants in the pots.")
+
        $("#plantBox").animate({
          opacity: 1
        }, guideTimeout, "linear", function() {
            $( this ).after(
-         blurElement("#plantBox", 0, uncoverPlaceBox())
+         blurElement("#plantBox", 0, uncoverPlaceBox()),
+         speak("Plant plants in the pots.")     
            )});
      }
 
      function uncoverPlaceBox() {
-       speak("Place pots into the greenbox.")
+
        $("#placeBox").animate({
          opacity: 1
        }, guideTimeout, "linear", function() {
            $( this ).after(
-         blurElement("#placeBox", 0, uncoverConWater())
+         blurElement("#placeBox", 0, uncoverConWater()),
+         speak("Place pots into the greenbox.")
            )});
      }
 
      function uncoverConWater() {
-       speak("Connect water hoses.")
+
        $("#conWater").animate({
          opacity: 1
        }, guideTimeout, "linear", function() {
            $( this ).after(
-         blurElement("#conWater", 0, uncoverInFertilizer())
+         blurElement("#conWater", 0, uncoverInFertilizer()),
+         speak("Connect water hoses.")
            )});
      }
 
      function uncoverInFertilizer() {
-       speak("Install Fertilizer.")
+
        $("#inFertilizer").animate({
          opacity: 1
        }, guideTimeout, "linear", function() {
            $( this ).after(
-         blurElement("#inFertilizer", 0, uncoverStartGrow())
+         blurElement("#inFertilizer", 0, uncoverStartGrow()),
+         speak("Install Fertilizer.")
            )});
      }
 
      function uncoverStartGrow() {
-       speak("Start growing.")
+
        $("#startGrow").animate({
          opacity: 1
        }, guideTimeout, "linear", function() {
            $( this ).after(
-         blurElement("#startGrow", 0)
+         blurElement("#startGrow", 0),
+         speak("Staart growing.")
            )});
      }
                  
@@ -122,6 +127,56 @@
        
      } 
      
+     function unView3() {
+       $("#view2").animate({
+         opacity: "toggle"
+       }, 3000, "linear", function() {
+           $( this ).after(
+         $("#top").css("display", "none"),
+         $("#view3").animate({
+               opacity: "toggle"
+         }, 1000, "linear")
+               )});  
+        pask(); 
+     }
+
+     function pask() {
+        var adder = 1;
+          var padding = 185;
+          var interval = setInterval(function() {
+            $("#marker").css("padding-left", padding+"px");
+            padding += adder;
+            if (padding == 370) {
+                $("#timeline").attr("src", "Slides/Slide_4/timeline1_icon.svg");
+            } else if (padding == 560) {
+                $("#timeline").attr("src", "Slides/Slide_4/timeline2_icon.svg");
+            } else if ( padding == 750) {
+                $("#timeline").attr("src", "Slides/Slide_4/timeline3_icon.svg");
+                $("#fertilizer").css("position", "relative");
+                $("#fertilizer").css("left", "600px");
+                $("#fertilizer").css("top", "0px");
+                $("#timeline").hide();
+                $("#marker").hide();
+                $("#fertilizer").show();
+                $("#fertilizer").css("cursor", "pointer");
+                $("#view3").css("width", "100%");
+                $("#view3").css("height", "250px");
+                $("#view3").css("background-image", "url(Slides/Slide_2/Background_transparency.svg)");
+                adder = 0;
+
+                $("#fertilizer").on("click", function() {
+                    $("#view3").css("background-image", "");
+                    $("#fertilizer").hide();
+                    $("#timeline").show();
+                    $("#marker").show();
+                    adder = 1;
+                });
+            } else if (padding == 930) {
+                $("#timeline").attr("src", "Slides/Slide_4/timeline4_icon.svg");
+            }   
+            if (padding > 1160) clearInterval(interval);
+        }, 1);
+    }
      
      
     </script> 
@@ -160,6 +215,19 @@
                 background-size: 100%;
             height: 280px;
         }
+
+           div#view3 {
+            display: none;
+                background-image: url(Slides/Slide_4/Background_transparency.svg);
+            background-repeat: no-repeat;
+                background-size: 100%;
+            height: auto;
+            margin-left: 20%;
+            margin-right: 20%;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
         div#debug {
             display: none;
         }
@@ -266,8 +334,75 @@
         -ms-filter: blur(2px);
         -o-filter: blur(2px);
         filter: blur(2px);
-    }
+     }
         
+     img#startGrowButton {
+       cursor:pointer;
+       border: none;
+       outline: none; 
+     }
+     
+     .timeline_left {
+       float: left;
+       width:25%;
+       height: 500px;
+       position: relative;
+     }
+
+     .inner_timeline_left {
+       position: absolute;
+       width: 200px;
+       bottom: 100px;
+     }
+     
+     .timeline_left img {
+       display: block;
+       width: 50%;
+       margin-left: auto;
+       margin-right: auto;
+     }
+
+     .timeline_right img {
+       display: block;
+       height: 50px;
+       margin-left: auto;
+       margin-right: auto;
+     }
+
+     .timeline_right {
+       float: right;
+       width:75%;
+       height: 500px;
+       position: relative;
+     }
+     
+     #timeline_top_left {
+       position: absolute;
+       top: 100px;
+       left: 100px
+     }
+
+     #timeline_top_right {
+       position: absolute;
+       top: 100px;
+       right: 100px
+     }
+
+     #timeline_bottom_left {
+       position: absolute;
+       bottom: 100px;
+       left: 100px
+     }
+
+     #timeline_bottom_right {
+       position: absolute;
+       bottom: 100px;
+       right: 100px
+     }
+
+     .timeline_bottom {
+
+     }
      
         </style>
     </head>
@@ -341,7 +476,7 @@
             <div id="placeBox" class="inner2">
               <img src="Slides/Slide_3/Plant_in_pot_icon.svg" alt="logo">
               <div style="clear: both;"></div>
-              <p> Place into the greenbox </p>
+              <p> Place pots into the Greenbox </p>
             </div>
           </div>
       
@@ -363,7 +498,7 @@
       
           <div class="left">
             <div id="startGrow" class="inner2">
-              <img src="Slides/Slide_3/Start_growing_icon.svg" alt="logo">
+          <img id="startGrowButton" src="Slides/Slide_3/Start_growing_icon.svg" alt="logo" onclick="unView3()">
               <div style="clear: both;"></div>
               <p> Start growing </p>
             </div>
@@ -373,82 +508,74 @@
     </div>
 
     <div id="view3">
-        <div class="left">
-            <div class="inner2">
+      
+      <div class="timeline_left">
+            <div id="plantBig" class="inner_timeline_left" style="display:none">
               <img src="Slides/Slide_4/Main_plant_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> main </p>
+              
             </div>
-          </div>
-
-          <div class="left">
-            <div class="inner2">
+        
+      
+            <div id="plantMedium" class="inner_timeline_left" style="display:none">
               <img src="Slides/Slide_4/big_plant_timeline_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> big main </p>
+              
             </div>
-          </div>
-
-          <div class="left">
-            <div class="inner2">
+      
+      
+            <div id="plantSmall" class="inner_timeline_left">
               <img src="Slides/Slide_4/Small_plant_timeline_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> start main </p>
+              
             </div>
           </div>
 
-          <div style="clear:both;"></div>
+      
+      <div class="timeline_right">
+            
+        <div id="timeline_top_left">
 
-          <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_4/Health_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> overall </p>
+          <img src="Slides/Slide_4/Temperature_icon.svg" alt="logo">
+          <p> 22 C</p>
             </div>
-          </div>
-
-          <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_4/Humidity_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> humidity </p>
+        
+            <div id="timeline_top_right">
+          
+          <img src="Slides/Slide_4/Humidity_icon.svg" alt="logo">
+          
             </div>
-          </div>
-
-          <div style="clear:both;"></div>
-
-          <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_4/Temperature_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> temperature </p>
+        
+            <div style="clear:both;"></div>
+        
+            <div id="timeline_bottom_left">
+          
+          <img src="Slides/Slide_4/Light_icon.svg" alt="logo">
+          
+          
             </div>
-          </div>
+        
+            <div id="timeline_bottom_right">
 
-          <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_4/Light_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> light </p>
+          <img src="Slides/Slide_4/Health_icon.svg" alt="logo">     
+    
             </div>
-          </div>
+        
+            <div style="clear:both;"></div>
+      </div>
+      
+          <div class="timeline_bottom">
+              <img id="ball1" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+              <img id="ball2" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+              <img id="ball3" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
+              <img id="ball4" style="display:none;" src="Slides/Slide_4/Filled_ball_icon.svg" alt="logo" width="25px">
 
-          <div style="clear:both;"></div>
+              <img id="timeline" src="Slides/Slide_4/timeline_icon.svg" alt="logo">
+              <img id="marker" src="Slides/Slide_4/timeline_marker_icon.svg" alt="logo" width="50px" height="50px">
 
-          <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_4/timeline_icon.svg" alt="logo" width="1400px">
-              <div style="clear: both;"></div>
-              <p> timeline </p>
-            </div>
-          </div>
-
-          <div class="left">
-            <div class="inner2">
-              <img src="Slides/Slide_4/timeline_marker_icon.svg" alt="logo">
-              <div style="clear: both;"></div>
-              <p> timeline marker </p>
-            </div>
+                <div id="fertilizer" style="display:none;">
+                  <div class="inner">
+                      <img src="Slides/Slide_Fertilizer_needed/Fertilizer_flowering_icon.svg" alt="logo">
+                      <p style="color: white; font-size: 15pt; font-weight: 200; margin: 6px 0 10px 0; text-align: center; letter-spacing: 2px;"> please replace the fertilizer </p>
+                  </div>
+                </div>
           </div>
     </div>
 
@@ -520,6 +647,20 @@
                 });
                 speak('Fancy!');
             }
+
+         function speak(text){
+           var msg = new SpeechSynthesisUtterance();
+           var voices = speechSynthesis.getVoices();
+           msg.voice = voices[0]; // Note: some voices don't support altering params
+           msg.voiceURI = 'Google UK English Female';
+           msg.volume = 1; // 0 to 1
+           msg.rate = 0.1; // 0.1 to 10
+           msg.pitch = 0; //0 to 2
+           msg.text = text;
+           msg.lang = 'en-US';
+                speechSynthesis.speak(msg);
+         }
+
             /*var hue = 0;
                 setInterval(function() {
                     var res = hjs.setValue(10, { sat: 255, hue: hue, bri: 10, on: true });
